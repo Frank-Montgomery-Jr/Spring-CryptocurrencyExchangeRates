@@ -34,6 +34,42 @@ public class CryptoService {
         return cryptoRepository.findByTicker(ticker.toUpperCase());
     }
     
+    // Add cryptocurrency by ticker/symbol (NEW METHOD for your test)
+    public CryptoCurrency addCrypto(String symbol) {
+        // Map common symbols to CoinGecko IDs
+        String coinId = mapSymbolToCoinId(symbol);
+        return fetchAndSaveCrypto(coinId);
+    }
+    
+    // Helper method to map symbols to CoinGecko IDs
+    private String mapSymbolToCoinId(String symbol) {
+        String lowerSymbol = symbol.toLowerCase();
+        switch (lowerSymbol) {
+            case "btc":
+                return "bitcoin";
+            case "eth":
+                return "ethereum";
+            case "usdt":
+                return "tether";
+            case "bnb":
+                return "binancecoin";
+            case "sol":
+                return "solana";
+            case "xrp":
+                return "ripple";
+            case "ada":
+                return "cardano";
+            case "doge":
+                return "dogecoin";
+            case "dot":
+                return "polkadot";
+            case "matic":
+                return "matic-network";
+            default:
+                return lowerSymbol; // Try using the symbol as-is
+        }
+    }
+    
     // Fetch and save cryptocurrency data from CoinGecko
     public CryptoCurrency fetchAndSaveCrypto(String coinId) {
         try {
@@ -96,5 +132,3 @@ public class CryptoService {
         System.out.println("Update complete!");
     }
 }
-
-
